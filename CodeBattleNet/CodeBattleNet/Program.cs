@@ -8,7 +8,7 @@ namespace CodeBattleNet
 		private static void Main()
 		{
 			var r = new Random();
-			var gcb = new GameClientBomberman("ws://localhost:8080/codenjoy-contest/ws?user=ab@c.ru");
+			var gcb = new GameClientBomberman("localhost:8080", "ab@c.ru");
 			gcb.OnUpdate += () =>
 			{
 				var done = false;

@@ -13,11 +13,13 @@ namespace CodeBattleNetLibrary
 		public int PlayerX { get; private set; }
 		public int PlayerY { get; private set; }
 
-		public GameClientBomberman(string path)
+		public GameClientBomberman(string server, string userEmail, string userPassword=null)
 		{
 			MapSize = 0;
 
-			_socket = new WebSocket(path);
+			_socket =
+				new WebSocket(
+					$"ws://{server}/codenjoy-contest/ws?user={userEmail}{(string.IsNullOrEmpty(userPassword) ? string.Empty : $"&pwd={userPassword}")}");
 			_socket.MessageReceived += (s, e) => { ParseField(e.Message); };
 			_socket.Open();
 		}
