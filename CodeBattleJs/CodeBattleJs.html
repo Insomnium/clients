@@ -25,11 +25,8 @@
       return result;
     };
     
-    var pass = md5('1');
-
-//    var gcb = new GameClient("ws://52.232.32.105:8080/codenjoy-contest/ws?user=bot@dpankratov.ru&password=" + pass,
-    var gcb = new GameClient("ws://52.232.32.105:8080/codenjoy-contest/ws?user=bot@dpankratov.ru&pwd=" + pass,
-      function()
+    var gcb = new GameClient("localhost:8080", "ab@c.ru")
+    gcb.run(function()
       {
         var done = false;
 
