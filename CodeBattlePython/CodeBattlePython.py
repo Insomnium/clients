@@ -43,4 +43,5 @@ def turn(gcb):
         gcb.blank();
 
 random.seed()
-GameClient("ws://localhost:8080/codenjoy-contest/ws?user=ab@c.ru", turn)
+gcb = GameClient("localhost:8080", "ab@c.ru")
+gcb.run(turn)

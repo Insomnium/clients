@@ -32,9 +32,12 @@ class BombermanBlocks(Enum):
     Space = u' '
 
 class GameClient:
-    def __init__(self, path, on_turn = None):
-        self.on_turn = on_turn
+    def __init__(self, server, userEmail, userPassword = None):
+        path = "ws://" + server + "/codenjoy-contest/ws?user=" + userEmail + (("&pwd=" + userPassword) if userPassword != None else "")
         self.socket = websocket.WebSocketApp(path, on_message = self.on_message, on_error = self.on_error, on_close = self.on_close)
+    
+    def run(self, on_turn = None):
+        self.on_turn = on_turn
         self.socket.run_forever()
 
     def on_message(self, ws, message):
