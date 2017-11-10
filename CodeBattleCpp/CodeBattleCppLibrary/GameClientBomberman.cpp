@@ -2,10 +2,12 @@
 
 #include <iostream>
 
-GameClientBomberman::GameClientBomberman()
+GameClientBomberman::GameClientBomberman(std::function<void()> _message_handler)
 {
 	map = nullptr;
 	map_size = 0;
+
+	message_handler = _message_handler;
 
 	is_running = false;
 }
@@ -16,12 +18,10 @@ GameClientBomberman::~GameClientBomberman()
 	work_thread->join();
 }
 
-void GameClientBomberman::Run(std::string _path, std::function<void()> _message_handler)
+void GameClientBomberman::Run(std::string server, std::string userEmail, std::string userPassword)
 {
-	message_handler = _message_handler;
-
 	is_running = true;
-	work_thread = new std::thread(&GameClientBomberman::update_func, this, _path);
+	work_thread = new std::thread(&GameClientBomberman::update_func, this, "ws://" + server + "/codenjoy-contest/ws?user=" + userEmail + (userPassword.empty() ? "" : "&pwd=" + userPassword));
 }
 
 void GameClientBomberman::update_func(std::string _path)

@@ -27,10 +27,10 @@ class GameClientBomberman
 	void update_func(std::string _path);
 
 public:
-	GameClientBomberman();
+	GameClientBomberman(std::function<void()> _message_handler);
 	~GameClientBomberman();
 
-	void Run(std::string _path, std::function<void()> _message_handler);
+	void Run(std::string server, std::string userEmail, std::string userPassword = "");
 	void Up() { web_socket->send("UP"); }
 	void Down() { web_socket->send("DOWN"); }
 	void Right() { web_socket->send("RIGHT"); }
