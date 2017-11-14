@@ -21,3 +21,6 @@ CodeBattleCpp/Release/CodeBattleCpp.exe
 CodeBattleCpp/CodeBattleCpp.VC.db
 CodeBattleCpp/CodeBattleCpp.VC.VC.opendb
 CodeBattlePython/__pycache__/
+CodeBattleJava/*.iml
+CodeBattleJava/target
+CodeBattleJava/.idea
