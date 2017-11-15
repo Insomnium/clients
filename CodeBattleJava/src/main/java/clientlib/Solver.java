@@ -1,41 +1,31 @@
 package clientlib;
 
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static clientlib.Action.NONE;
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
 
 public abstract class Solver {
 
     protected int size;
-    protected Elements[][][] field;
-    protected List<String> layersString = new LinkedList<>();
+    protected Elements[][] field;
 
     /**
      * Метод парсинга игрового поля. Вызывается после ответа сервера
+     *
      * @param boardString игровое поле
      */
     public Solver parseField(String boardString) {
-        String[] layers = new String[]{boardString};
-        layersString.clear();
-        layersString.addAll(asList(layers));
 
-        String board = layers[0].replaceAll("\n", "");
+        String board = boardString.replaceAll("\n", "");
         size = (int) Math.sqrt(board.length());
-        field = new Elements[layers.length][size][size];
+        field = new Elements[size][size];
+        board = boardString.replaceAll("\n", "");
 
-        for (int i = 0; i < layers.length; ++i) {
-            board = layers[i].replaceAll("\n", "");
-
-            char[] temp = board.toCharArray();
-            for (int y = 0; y < size; y++) {
-                int dy = y * size;
-                for (int x = 0; x < size; x++) {
-                    field[i][x][y] = Elements.valueOf(temp[dy + x]);
-                }
+        char[] temp = board.toCharArray();
+        for (int y = 0; y < size; y++) {
+            int dy = y * size;
+            for (int x = 0; x < size; x++) {
+                field[x][y] = Elements.valueOf(temp[dy + x]);
             }
         }
 

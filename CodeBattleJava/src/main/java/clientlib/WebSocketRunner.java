@@ -125,7 +125,8 @@ public class WebSocketRunner {
                     }
 
                     solver.parseField(matcher.group(1));
-                    String answer = solver.act();
+                    String answer = solver.move();
+                    print("Sending step: " + answer);
                     connection.sendMessage(answer);
                 } catch (Exception e) {
                     print(e);
