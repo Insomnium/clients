@@ -30,6 +30,12 @@ BombermanBlocks =
   Space: ' '
 }
 
+module BombAction
+  None = 0,
+  BeforeTurn = 1,
+  AfterTurn = 2
+end
+
 class GameClient
   attr_reader :mapSize
   attr_reader :map
@@ -80,20 +86,20 @@ class GameClient
     end
   end
   
-  def up
-    @ws.send "UP"
+  def up(action = BombAction::None)
+    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}UP#{action == BombAction::AfterTurn ? ",ACT" : ""}"
   end
   
-  def down
-    @ws.send "DOWN"
+  def down(action = BombAction::None)
+    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}DOWN#{action == BombAction::AfterTurn ? ",ACT" : ""}"
   end
   
-  def right
-    @ws.send "RIGHT"
+  def right(action = BombAction::None)
+    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}RIGHT#{action == BombAction::AfterTurn ? ",ACT" : ""}"
   end
   
-  def left
-    @ws.send "LEFT"
+  def left(action = BombAction::None)
+    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}LEFT#{action == BombAction::AfterTurn ? ",ACT" : ""}"
   end
   
   def act

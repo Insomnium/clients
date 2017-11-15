@@ -21,22 +21,22 @@ def turn(gcb)
   case r
   when 0
     if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.up
+      gcb.up(BombAction::BeforeTurn)
       done = true
     end
   when 1
     if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.down
+      gcb.down(BombAction::BeforeTurn)
       done = true
     end
   when 2
     if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.right
+      gcb.right(BombAction::BeforeTurn)
       done = true
     end
   when 3
     if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.left
+      gcb.left(BombAction::BeforeTurn)
       done = true
     end
   when 4
