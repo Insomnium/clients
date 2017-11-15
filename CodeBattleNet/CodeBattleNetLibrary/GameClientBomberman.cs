@@ -13,7 +13,7 @@ namespace CodeBattleNetLibrary
 		public int PlayerX { get; private set; }
 		public int PlayerY { get; private set; }
 
-		public GameClientBomberman(string server, string userEmail, string userPassword=null)
+		public GameClientBomberman(string server, string userEmail, string userPassword = null)
 		{
 			MapSize = 0;
 
