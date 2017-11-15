@@ -1,10 +1,12 @@
-package clientlib;
+package client.lib
 
-import static clientlib.Action.AFTER_TURN;
-import static clientlib.Action.BEFORE_TURN
-import static clientlib.TestSolver.STEP.*;
+import client.lib.bomberman.BombermanSolver;
 
-class TestSolver extends Solver {
+import static Action.AFTER_TURN;
+import static Action.BEFORE_TURN
+import static TestBombermanSolver.STEP.*;
+
+class TestBombermanSolver extends BombermanSolver {
 
     enum STEP {
         UP,
@@ -26,7 +28,7 @@ class TestSolver extends Solver {
 
     private STEP stepToCheck;
 
-    public TestSolver(STEP stepToCheck) {
+    TestBombermanSolver(STEP stepToCheck) {
         this.stepToCheck = stepToCheck;
     }
 

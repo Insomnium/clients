@@ -1,4 +1,4 @@
-package clientlib;
+package client.lib;
 
 
 import org.eclipse.jetty.websocket.WebSocket;

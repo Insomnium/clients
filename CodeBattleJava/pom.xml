@@ -61,7 +61,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>clientlib.ClientApp</mainClass>
+                            <mainClass>client.ClientApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
