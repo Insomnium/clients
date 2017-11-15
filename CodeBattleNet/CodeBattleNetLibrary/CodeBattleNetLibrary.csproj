@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BombAction.cs" />
     <Compile Include="BombermanBlocks.cs" />
     <Compile Include="GameClientBomberman.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

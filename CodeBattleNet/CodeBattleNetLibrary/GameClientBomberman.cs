@@ -6,7 +6,7 @@ namespace CodeBattleNetLibrary
 	public class GameClientBomberman
 	{
 		private readonly WebSocket _socket;
-		public event Action OnUpdate;
+		private event Action OnUpdate;
 
 		public BombermanBlocks[,] Map { get; private set; }
 		public int MapSize { get; private set; }
@@ -21,27 +21,40 @@ namespace CodeBattleNetLibrary
 				new WebSocket(
 					$"ws://{server}/codenjoy-contest/ws?user={userEmail}{(string.IsNullOrEmpty(userPassword) ? string.Empty : $"&pwd={userPassword}")}");
 			_socket.MessageReceived += (s, e) => { ParseField(e.Message); };
+		}
+
+		public void Run(Action handler)
+		{
+			OnUpdate += handler;
 			_socket.Open();
 		}
 
-		public void Up()
+		public void Up(BombAction bombAction = BombAction.None)
 		{
-			_socket.Send("UP");
+			_socket.Send(
+				$"{(bombAction == BombAction.BeforeTurn ? "ACT," : "")}UP{(bombAction == BombAction.AfterTurn ? ",ACT" : "")}"
+				);
 		}
 
-		public void Down()
+		public void Down(BombAction bombAction = BombAction.None)
 		{
-			_socket.Send("DOWN");
+			_socket.Send(
+				$"{(bombAction == BombAction.BeforeTurn ? "ACT," : "")}DOWN{(bombAction == BombAction.AfterTurn ? ",ACT" : "")}"
+				);
 		}
 
-		public void Right()
+		public void Right(BombAction bombAction = BombAction.None)
 		{
-			_socket.Send("RIGHT");
+			_socket.Send(
+				$"{(bombAction == BombAction.BeforeTurn ? "ACT," : "")}RIGHT{(bombAction == BombAction.AfterTurn ? ",ACT" : "")}"
+				);
 		}
 
-		public void Left()
+		public void Left(BombAction bombAction = BombAction.None)
 		{
-			_socket.Send("LEFT");
+			_socket.Send(
+				$"{(bombAction == BombAction.BeforeTurn ? "ACT," : "")}LEFT{(bombAction == BombAction.AfterTurn ? ",ACT" : "")}"
+				);
 		}
 
 		public void Act()

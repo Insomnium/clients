@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-GameClientBomberman::GameClientBomberman(std::function<void()> _message_handler)
+GameClientBomberman::GameClientBomberman(std::string _server, std::string _userEmail, std::string _userPassword)
 {
 	map = nullptr;
 	map_size = 0;
 
-	message_handler = _message_handler;
+	path = "ws://" + _server + "/codenjoy-contest/ws?user=" + _userEmail + (_userPassword.empty() ? "" : "&pwd=" + _userPassword);
 
 	is_running = false;
 }
@@ -18,13 +18,13 @@ GameClientBomberman::~GameClientBomberman()
 	work_thread->join();
 }
 
-void GameClientBomberman::Run(std::string server, std::string userEmail, std::string userPassword)
+void GameClientBomberman::Run(std::function<void()> _message_handler)
 {
 	is_running = true;
-	work_thread = new std::thread(&GameClientBomberman::update_func, this, "ws://" + server + "/codenjoy-contest/ws?user=" + userEmail + (userPassword.empty() ? "" : "&pwd=" + userPassword));
+	work_thread = new std::thread(&GameClientBomberman::update_func, this, _message_handler);
 }
 
-void GameClientBomberman::update_func(std::string _path)
+void GameClientBomberman::update_func(std::function<void()> _message_handler)
 {
 #ifdef _WIN32
 	WSADATA wsaData;
@@ -33,7 +33,7 @@ void GameClientBomberman::update_func(std::string _path)
 		throw new std::exception("WSAStartup Failed.\n");
 #endif
 
-	web_socket = easywsclient::WebSocket::from_url(_path);
+	web_socket = easywsclient::WebSocket::from_url(path);
 	if (web_socket == nullptr)is_running = false;
 	while (is_running)
 	{
@@ -82,7 +82,7 @@ void GameClientBomberman::update_func(std::string _path)
 				}
 			}
 
-			this->message_handler();
+			_message_handler();
 		});
 	}
 	if (web_socket)web_socket->close();

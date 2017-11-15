@@ -21,3 +21,9 @@ CodeBattlePython/__pycache__/
 CodeBattleJava/*.iml
 CodeBattleJava/target
 CodeBattleJava/.idea
+/CodeBattleCpp/CodeBattleCpp/x64/Debug
+/CodeBattleCpp/CodeBattleCpp/x64/Release
+/CodeBattleCpp/CodeBattleCppLibrary/x64/Debug
+/CodeBattleCpp/CodeBattleCppLibrary/x64/Release
+/CodeBattleCpp/x64/Debug
+/CodeBattleCpp/x64/Release
