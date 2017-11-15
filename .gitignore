@@ -1,4 +1,4 @@
-.vs/
+CodeBattleNet/.vs/
 CodeBattleNet/CodeBattleNet/obj/Debug/
 CodeBattleNet/CodeBattleNet/obj/Release/
 CodeBattleNet/CodeBattleNet/bin/Debug/
@@ -8,6 +8,7 @@ CodeBattleNet/CodeBattleNetLibrary/obj/Release/
 CodeBattleNet/CodeBattleNetLibrary/bin/Debug/
 CodeBattleNet/CodeBattleNetLibrary/bin/Release/
 CodeBattleNet/packages/
+CodeBattleCpp/.vs/
 CodeBattleCpp/CodeBattleCpp/Debug/
 CodeBattleCpp/CodeBattleCpp/Release/
 CodeBattleCpp/CodeBattleCppLibrary/Debug/
