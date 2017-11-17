@@ -2,52 +2,51 @@ require_relative 'CodeBattleRubyLibrary'
 
 def isBlock?(block)
   [
-    :Wall,
-    :WallDestroyable,
-    :MeatChopper,
-    :BombTimer1,
-    :BombTimer2,
-    :BombTimer3,
-    :BombTimer4,
-    :BombTimer5,
-    :OtherBomberman,
-    :OtherBombBomberman
-  ].include?(block)
+    :Gold,
+    :Space,
+    :Ladder,
+    :Pipe,
+    :PitFill1,
+    :PitFill2,
+    :PitFill3,
+    :PitFill4,
+    :DrillPit
+  ].include?(block) == false
 end
 
-def turn(gcb)
+def turn(gc)
   done = false
   r = rand(5)
   case r
   when 0
-    if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.up(BombAction::BeforeTurn)
+    if isBlock?(gc.map[gc.playerY - 1][gc.playerX]) == false
+      gc.up()
       done = true
     end
   when 1
-    if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.down(BombAction::BeforeTurn)
+    if isBlock?(gc.map[gc.playerY - 1][gc.playerX]) == false
+      gc.down()
       done = true
     end
   when 2
-    if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.right(BombAction::BeforeTurn)
+    if isBlock?(gc.map[gc.playerY - 1][gc.playerX]) == false
+      gc.right()
       done = true
     end
   when 3
-    if isBlock?(gcb.map[gcb.playerY - 1][gcb.playerX]) == false
-      gcb.left(BombAction::BeforeTurn)
+    if isBlock?(gc.map[gc.playerY - 1][gc.playerX]) == false
+      gc.left()
       done = true
     end
   when 4
-    gcb.act
+    gc.act
     done = true
   else
   end
   if done == false
-    gcb.blank
+    gc.blankg
   end
 end
 
-w = GameClient.new("52.232.32.105:8080", "ab@c.ru", "123")
+w = GameClient.new("192.168.0.25:8080", "a@b.ru", "123")
 w.run(method(:turn))

@@ -1,36 +1,51 @@
 require 'websocket'
 require 'websocket-eventmachine-client'
 
-BombermanBlocks =
+Blocks =
 {
-  Unknown: '\0',
+  Space: ' ',
 
-  Bomberman: '☺',
-  BombBomberman: '☻',
-  DeadBomberman: 'Ѡ',
+  Brick: '#',
+  PitFill1: '1',
+  PitFill2: '2',
+  PitFill3: '3',
+  PitFill4: '4',
+  UndestroyableWall: '☼',
 
-  OtherBomberman: '♥',
-  OtherBombBomberman: '♠',
-  OtherDeadBomberman: '♣',
+  DrillPit: '*',
 
-  BombTimer5: '5',
-  BombTimer4: '4',
-  BombTimer3: '3',
-  BombTimer2: '2',
-  BombTimer1: '1',
-  Boom: '҉',
+  EnemyLadder: 'Q',
+  EnemyLeft: '«',
+  EnemyRight: '»',
+  EnemyPipeLeft: '<',
+  EnemyPipeRight: '>',
+  EnemyPit: 'X',
 
-  Wall: '☼',
-  WallDestroyable: '#',
-  DestroyedWall: 'H',
+  Gold: '$',
 
-  MeatChopper: '&',
-  DeadMeatChopper: 'x',
+  HeroDie: 'Ѡ',
+  HeroDrillLeft: 'Я',
+  HeroDrillRight: 'R',
+  HeroLadder: 'Y',
+  HeroLeft: '◄',
+  HeroRight: '►',
+  HeroFallLeft: ']',
+  HeroFallRight: '[',
+  HeroPipeLeft: '{',
+  HeroPipeRight: '}',
 
-  Space: ' '
+  OtherHeroDie: 'Z',
+  OtherHeroLeft: ')',
+  OtherHeroRight: '(',
+  OtherHeroLadder: 'U',
+  OtherHeroPipeLeft: 'Э',
+  OtherHeroPipeRight: 'Є',
+
+  Ladder: 'H',
+  Pipe: '~'
 }
 
-module BombAction
+module ActionTime
   None = 0,
   BeforeTurn = 1,
   AfterTurn = 2
@@ -63,10 +78,21 @@ class GameClient
         messageCur = 0
         for j in 0..(@mapSize - 1)
           for i in 0..(@mapSize - 1)
-            BombermanBlocks.each do |key, value|
+            Blocks.each do |key, value|
               if message[messageCur] == value
                 @map[j][i] = key
-                if key == :Bomberman || key == :BombBomberman || key == :DeadBomberman
+                if [
+                  :HeroDie,
+                  :HeroDrillLeft,
+                  :HeroDrillRight,
+                  :HeroLadder,
+                  :HeroLeft,
+                  :HeroRight,
+                  :HeroFallLeft,
+                  :HeroFallRight,
+                  :HeroPipeLeft,
+                  :HeroPipeRight
+                ].include?(key)
                   @playerX = i
                   @playerY = j
                 end
@@ -86,20 +112,20 @@ class GameClient
     end
   end
   
-  def up(action = BombAction::None)
-    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}UP#{action == BombAction::AfterTurn ? ",ACT" : ""}"
+  def up(action = ActionTime::None)
+    @ws.send "#{action == ActionTime::BeforeTurn ? "ACT," : ""}UP#{action == ActionTime::AfterTurn ? ",ACT" : ""}"
   end
   
-  def down(action = BombAction::None)
-    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}DOWN#{action == BombAction::AfterTurn ? ",ACT" : ""}"
+  def down(action = ActionTime::None)
+    @ws.send "#{action == ActionTime::BeforeTurn ? "ACT," : ""}DOWN#{action == ActionTime::AfterTurn ? ",ACT" : ""}"
   end
   
-  def right(action = BombAction::None)
-    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}RIGHT#{action == BombAction::AfterTurn ? ",ACT" : ""}"
+  def right(action = ActionTime::None)
+    @ws.send "#{action == ActionTime::BeforeTurn ? "ACT," : ""}RIGHT#{action == ActionTime::AfterTurn ? ",ACT" : ""}"
   end
   
-  def left(action = BombAction::None)
-    @ws.send "#{action == BombAction::BeforeTurn ? "ACT," : ""}LEFT#{action == BombAction::AfterTurn ? ",ACT" : ""}"
+  def left(action = ActionTime::None)
+    @ws.send "#{action == ActionTime::BeforeTurn ? "ACT," : ""}LEFT#{action == ActionTime::AfterTurn ? ",ACT" : ""}"
   end
   
   def act
