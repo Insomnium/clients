@@ -27,6 +27,13 @@
   Space: ' '
 };
 
+var BombAction =
+{
+  None: 0,
+  BeforeTurn: 1,
+  AfterTurn: 2
+};
+
 class GameClient
 {
   constructor(server, userEmail, userPassword = "")
@@ -82,10 +89,26 @@ class GameClient
   set onclose(callback) { this.socket.onclose = callback; }
   set onerror(callback) { this.socket.onerror = callback; }
   
-  up()    { this.socket.send("UP");    }
-  down()  { this.socket.send("DOWN");  }
-  right() { this.socket.send("RIGHT"); }
-  left()  { this.socket.send("LEFT");  }
-  act()   { this.socket.send("ACT");   }
-  blank() { this.socket.send("");      }  
+  up(action = BombAction.None)
+  {
+    this.socket.send((action == BombAction.BeforeTurn ? "ACT,": "") + "UP" + (action == BombAction.AfterTurn ? ",ACT": ""));
+  }
+  
+  down(action = BombAction.None)
+  {
+    this.socket.send((action == BombAction.BeforeTurn ? "ACT,": "") + "DOWN" + (action == BombAction.AfterTurn ? ",ACT": ""));
+  }
+  
+  right(action = BombAction.None)
+  {
+    this.socket.send((action == BombAction.BeforeTurn ? "ACT,": "") + "RIGHT" + (action == BombAction.AfterTurn ? ",ACT": ""));
+  }
+  
+  left(action = BombAction.None)
+  {
+    this.socket.send((action == BombAction.BeforeTurn ? "ACT,": "") + "LEFT" + (action == BombAction.AfterTurn ? ",ACT": ""));
+  }
+  
+  act() { this.socket.send("ACT"); }
+  blank() { this.socket.send(""); }  
 }

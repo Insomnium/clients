@@ -1,0 +1,65 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>TEST</title>
+  <script src="CodeBattleJsLibrary.js"></script>
+</head>
+<body id="body">
+  <textarea id="text" readonly=true style="display: block; width: 100%; height: 100%; resize: none;"></textarea>
+  <script type="text/javascript">
+  
+    var isBlock = function(block)
+    {
+      var result = false;
+      result =
+        block != Blocks.Gold &&
+        block != Blocks.None &&
+        block != Blocks.Ladder &&
+        block != Blocks.Pipe &&
+        block != Blocks.PitFill1 &&
+        block != Blocks.PitFill2 &&
+        block != Blocks.PitFill3 &&
+        block != Blocks.PitFill4 &&
+        block != Blocks.DrillPit;
+      return result;
+    };
+    
+    var gc = new GameClient("localhost:8080", "a@b.ru", "123")
+    gc.run(function()
+    {
+      var done = false;
+
+      switch (Math.round(Math.random() * 5 - 0.5))
+      {
+        case 0: if (isBlock(gc.map[gc.playerY - 1][gc.playerX]) == false) { gc.up();    done = true; } break;
+        case 1: if (isBlock(gc.map[gc.playerY][gc.playerX + 1]) == false) { gc.right(); done = true; } break;
+        case 2: if (isBlock(gc.map[gc.playerY + 1][gc.playerX]) == false) { gc.down();  done = true; } break;
+       	case 3: if (isBlock(gc.map[gc.playerY][gc.playerX - 1]) == false) { gc.left();  done = true; } break;
+        case 4: gc.act(); done = true; break;
+      }
+      if (done == false)
+        gc.blank();
+    });
+    
+    gc.onopen = function()
+    {
+      text.value += "Соединение установлено.\n";
+    };
+
+    gc.onclose = function(event)
+    {
+      if (event.wasClean)
+        text.value += "Соединение закрыто чисто";
+      else
+        text.value += "Обрыв соединения";
+
+      text.value += " - Код: " + event.code + ", Причина: " + event.reason + "\n";
+    };
+
+    gc.onerror = function(error)
+    {
+      text.value += "Ошибка: " + error.message + "\n";
+    };
+  </script>
+</body>
+</html>

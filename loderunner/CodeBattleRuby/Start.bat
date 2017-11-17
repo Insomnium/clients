@@ -1,0 +1,2 @@
+ruby CodeBattleRuby.rb
+pause
