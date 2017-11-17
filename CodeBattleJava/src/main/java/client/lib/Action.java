@@ -1,4 +1,4 @@
-package clientlib;
+package client.lib;
 
 
 public enum Action {
