@@ -5,7 +5,7 @@ setup(name='bombermanclient',
       description='Bomberman Dojo game client',
       author='',
       author_email='',
-      packages=['kataclient'],
+      packages=['bombermanclient'],
       install_requires=['websocket-client', 'click'],
       entry_points={
           'console_scripts': [
