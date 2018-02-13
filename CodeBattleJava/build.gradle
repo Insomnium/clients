@@ -14,13 +14,13 @@ repositories {
 mainClassName = 'ru.codebattle.client.CodeBattleJava'
 
 jar {
-	manifest {	
-		attributes "Main-Class": "ru.codebattle.client.CodeBattleJava"
-	}
+    manifest {
+        attributes "Main-Class": "ru.codebattle.client.CodeBattleJava"
+    }
 
-	from {
-		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-	}
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 dependencies {
