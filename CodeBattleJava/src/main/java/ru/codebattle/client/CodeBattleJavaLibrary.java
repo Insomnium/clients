@@ -33,6 +33,10 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
         super(new URI(format("ws://%s/codenjoy-contest/ws?user=%s&code=%s", serverAddress, user, code)));
     }
 
+    public CodeBattleJavaLibrary(String serverAddress, String user, String code, boolean chopper) throws URISyntaxException {
+        super(new URI(format("ws://%s/codenjoy-contest/ws?user=%s&code=%s&chopper=true", serverAddress, user, code)));
+    }
+
     @Override
     public void onOpen(ServerHandshake handShakeData) {
         log.info("Connection established");
@@ -40,7 +44,7 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        log.warn("### disconnected ###");
+        log.warn("### disconnected ###\n{}\n{}", code, reason);
     }
 
     @Override
@@ -50,6 +54,7 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {   // "description": "No more Levels. You win!"
+//        System.out.println(message);
         ofNullable(message)
                 .map(this::parseField)
                 .map(msg -> {
@@ -76,7 +81,7 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
     }
 
     public final void right(Action action) {
-        sendMsg("RIGHT", NONE);
+        sendMsg("RIGHT", action);
     }
 
     public final void up() {
@@ -109,6 +114,8 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
             throw new RuntimeException("Error parsing data: " + boardString);
         }
         boardString = matcher.group(1);
+//        System.out.println("------------------------------------------------------");
+//        System.out.println(boardString);
         String board = boardString.replaceAll("\n", "");
         int size = (int) Math.sqrt(board.length());
         BombermanBlock[][] field = new BombermanBlock[size][size];
@@ -131,7 +138,7 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
     private void sendMsg(String direction, Action action) {
         action = action == null ? NONE : action;
         String msg = format("%s%s%s", action.getPreTurn(), direction, action.getPostTurn());
-        log.info("Sending: {}", msg);
+//        log.info("Sending: {}", msg);
         send(msg);
     }
 
