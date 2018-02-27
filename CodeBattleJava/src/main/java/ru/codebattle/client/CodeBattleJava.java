@@ -34,37 +34,43 @@ public class CodeBattleJava {
             new HashMap<String, String>() {{
 //                put("AristarhkStepanovich@mail.org", "199156891617850128");
                 put("JohnDoe@mail.org", "19538010221597751223");
-                put("SerseyaIvanovna@mail.org", "111276748767943530");
+//                put("SerseyaIvanovna@mail.org", "111276748767943530");
                 put("bomber_bot@mail.org", "1987626998751380587");
-                put("iivanov@mail.org", "16688974112085572133");
-                put("zerocool@mail.org", "15494554602085234076");
+//                put("iivanov@mail.org", "16688974112085572133");
+//                put("zerocool@mail.org", "15494554602085234076");
                 put("Dima@mail.org", "2008272492740297775");
                 put("Nikita@mail.org", "1789694651472879178");
                 put("Natasha@mail.org", "2800432011057222690");
                 put("Masha@mail.org", "5146841711011993173");
-                put("Sergei@mail.org", "1908538430285206148");
+//                put("Sergei@mail.org", "1908538430285206148");
                 put("Sasha@mail.org", "746931375947464949");
                 put("Veronika@mail.org", "1971406992193270485");
                 put("Igor@mail.org", "20781506761381890555");
+
+                put("uberchopper@bot.secret", "3650663101487808180");
+                put("angryballoon@bot.secret", "1180533961600703");
+                put("WinnieThePooh@bot.secret", "15075546601169645392");
+                put("ChopChop@bot.secret", "8769325651614484025");
+                put("Denis@bot.secret", "4110322561677235766");
             }}
     );
 
     @SneakyThrows
     public static void main(String[] args) {
-//        runSampler();
-//        runConsoleClient(true);
-        runRandomClient(true, SERVER_ADDRESS, "bot0@bot.secret", "10432978061512349060");
-        runRandomClient(false, SERVER_ADDRESS, "regular@mail.org", "12645402411403548524");
+        runSampler();
+
+//        runConsoleClient(SERVER_ADDRESS, "bot0@bot.secret", "10432978061512349060");
+//        runConsoleClient(SERVER_ADDRESS, "regular@mail.org", "12645402411403548524");
+//        runRandomClient(true, SERVER_ADDRESS, "bot0@bot.secret", "10432978061512349060");
+//        runRandomClient(false, SERVER_ADDRESS, "regular@mail.org", "12645402411403548524");
     }
 
     private static void runSampler() {
         new ClientSampler(SAMPLE_PLAYERS, "epruizhw0172.moscow.epam.com:8080").run();
     }
 
-    private static void runConsoleClient(boolean chopper) throws URISyntaxException {
-        CodeBattleJavaLibrary client = !chopper
-                ? new CodeBattleJavaLibrary(SERVER_ADDRESS, PLAYER_NAME, AUTH_CODE)
-                : new CodeBattleJavaLibrary(SERVER_ADDRESS, PLAYER_NAME, AUTH_CODE, true);
+    private static void runConsoleClient(String address, String playerName, String authCode) throws URISyntaxException {
+        CodeBattleJavaLibrary client = new CodeBattleJavaLibrary(address, playerName, authCode);
         Scanner scanner = new Scanner(System.in);
 
         client.run(map -> {
@@ -90,9 +96,7 @@ public class CodeBattleJava {
     }
 
     private static void runRandomClient(boolean chopper, String address, String playerName, String authCode) throws URISyntaxException {
-        CodeBattleJavaLibrary client = !chopper
-                ? new CodeBattleJavaLibrary(address, playerName, authCode)
-                : new CodeBattleJavaLibrary(address, playerName, authCode, true);
+        CodeBattleJavaLibrary client = new CodeBattleJavaLibrary(address, playerName, authCode);
         Random random = new Random();
         client.run(map -> {
             boolean done = false;

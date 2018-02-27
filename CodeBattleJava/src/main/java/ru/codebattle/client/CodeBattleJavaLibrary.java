@@ -33,10 +33,6 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
         super(new URI(format("ws://%s/codenjoy-contest/ws?user=%s&code=%s", serverAddress, user, code)));
     }
 
-    public CodeBattleJavaLibrary(String serverAddress, String user, String code, boolean chopper) throws URISyntaxException {
-        super(new URI(format("ws://%s/codenjoy-contest/ws?user=%s&code=%s&chopper=true", serverAddress, user, code)));
-    }
-
     @Override
     public void onOpen(ServerHandshake handShakeData) {
         log.info("Connection established");
@@ -138,7 +134,7 @@ public class CodeBattleJavaLibrary extends WebSocketClient {
     private void sendMsg(String direction, Action action) {
         action = action == null ? NONE : action;
         String msg = format("%s%s%s", action.getPreTurn(), direction, action.getPostTurn());
-//        log.info("Sending: {}", msg);
+        log.info("Sending: {}", msg);
         send(msg);
     }
 
